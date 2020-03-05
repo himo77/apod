@@ -108,12 +108,16 @@ namespace APOD
             lblTitle.Text = apodResponse.Title;
 
             // Format and show image credits
+            string creditAnswer = apodResponse.Copyright.Replace('\n', ' ');
+            if (creditAnswer.Contains($"Image credit:"))
+            {
+                lblCredits.Text = $"{creditAnswer}";
+            }
+            else
+            {
+                lblCredits.Text = $"Image credit: {creditAnswer}";
+            }
             
-            lblCredits.Text = $"Image credit: {apodResponse.Copyright}";
-            
-
-
-
             // Convert date string from response, which is in the form yyy-mm-dd,
             // into a DateTime, so it can be formatted and displayed
             DateTime date = DateTime.Parse(apodResponse.Date);
