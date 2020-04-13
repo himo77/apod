@@ -15,10 +15,13 @@ namespace APOD
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Set the text in the txtDate TextBox to today's date,
-            // formatted as MM/DD/YYYY
-            DateTime today = DateTime.Today;
-            txtDate.Text = $"{today:d}";
+            dtePictureDate.Value = DateTime.Today;
+            // Set the range of valid dates
+            dtePictureDate.MinDate = new DateTime(1995, 6, 16);
+            dtePictureDate.MaxDate = DateTime.Today;
+            GetAPOD(DateTime.Today);
+            
+          
         }
 
         private void btnGetToday_Click(object sender, EventArgs e)
@@ -35,7 +38,9 @@ namespace APOD
             {
                 // Attempt to convert text into a DateTime
                 // This will throw a FormatException if the date can't be parsed
-                DateTime date = DateTime.Parse(txtDate.Text);
+                DateTime date = dtePictureDate.Value;
+                // fetch Astronomy picture for this date
+                GetAPOD(date);
 
                 // Make sure the date is today or in the past
                 if (date > DateTime.Today)
@@ -165,7 +170,7 @@ namespace APOD
 
             btnGetForDate.Enabled = enable;
             btnGetToday.Enabled = enable;
-            txtDate.Enabled = enable;
+            dtePictureDate.Enabled = enable;
 
             progressBar.Visible = !enable;   // The opposite of whether the buttons are enabled
         }
